@@ -62,7 +62,7 @@ def optimize(content_targets, style_target, content_weight, style_weight,
         content_size = _tensor_size(content_features[CONTENT_LAYER])*batch_size
         assert _tensor_size(content_features[CONTENT_LAYER]) == _tensor_size(net[CONTENT_LAYER])
         content_loss = content_weight * (2 * tf.nn.l2_loss(
-            net[CONTENT_LAYER] - content_features[CONTENT_LAYER]) / content_size
+            net[CONTENT_LAYER] - content_features[CONTENT_LAYER]) / tf.cast(content_size, tf.float32)
         )
 
         style_losses = []
