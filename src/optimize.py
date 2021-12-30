@@ -83,7 +83,7 @@ def optimize(content_targets, style_target, content_weight, style_weight,
         tv_x_size = _tensor_size(preds[:,:,1:,:])
         y_tv = tf.nn.l2_loss(preds[:,1:,:,:] - preds[:,:batch_shape[1]-1,:,:])
         x_tv = tf.nn.l2_loss(preds[:,:,1:,:] - preds[:,:,:batch_shape[2]-1,:])
-        tv_loss = tv_weight*2*(x_tv/tv_x_size + y_tv/tv_y_size)/tf.cast(batch_size, tf.float32)
+        tv_loss = tv_weight*2*(x_tv/tv_x_size + y_tv/tv_y_size)/tf.cast(batch_size, tf.int32)
 
         loss = content_loss + style_loss + tv_loss
 
