@@ -29,7 +29,7 @@ def optimize(content_targets, style_target, content_weight, style_weight,
 
     # precompute style features
     #tf.device('/cpu:0')
-    with tf.Graph().as_default(), tf.device('/xla_gpu:0'), tf.compat.v1.Session() as sess:
+    with tf.Graph().as_default(), tf.device('/cpu:0'), tf.compat.v1.Session() as sess:
         style_image = tf.compat.v1.placeholder(tf.float32, shape=style_shape, name='style_image')
         style_image_pre = vgg.preprocess(style_image)
         net = vgg.net(vgg_path, style_image_pre)
