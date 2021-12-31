@@ -13,7 +13,7 @@ DEVICES = 'CUDA_VISIBLE_DEVICES'
 def optimize(content_targets, style_target, content_weight, style_weight,
              tv_weight, vgg_path, epochs=2, print_iterations=1000,
              batch_size=4, save_path='saver/fns.ckpt', slow=False,
-             learning_rate=1e-3, debug=False):
+             learning_rate=1e-3, debug=True):#False
     if slow:
         batch_size = 1
     mod = len(content_targets) % batch_size
@@ -28,7 +28,9 @@ def optimize(content_targets, style_target, content_weight, style_weight,
     print(style_shape)
 
     # precompute style features
-    with tf.Graph().as_default(), tf.device('/cpu:0'), tf.compat.v1.Session() as sess:
+    #tf.device('/cpu:0')
+    XLA_GPU:0
+    with tf.Graph().as_default(), tf.device('/XLA_GPU:0'), tf.compat.v1.Session() as sess:
         style_image = tf.compat.v1.placeholder(tf.float32, shape=style_shape, name='style_image')
         style_image_pre = vgg.preprocess(style_image)
         net = vgg.net(vgg_path, style_image_pre)
